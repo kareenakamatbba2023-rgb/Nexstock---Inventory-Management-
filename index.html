@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -559,193 +560,178 @@ body.mobile-preview-mode .mobile-exit-btn{display:block}
   color:var(--danger);letter-spacing:.5px;margin-top:6px;
 }
 
-@keyframes cardFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-@keyframes scanLine{0%{transform:translateY(-100%);opacity:0}20%{opacity:.6}80%{opacity:.6}100%{transform:translateY(400%);opacity:0}}
+@keyframes cardFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes scanLine{0%{transform:translateY(-100%);opacity:0}20%{opacity:.5}80%{opacity:.5}100%{transform:translateY(400%);opacity:0}}
 @keyframes roleScreenIn{from{opacity:0}to{opacity:1}}
-@keyframes cardIn{from{opacity:0;transform:translateY(30px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes cardIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes glitch{0%,100%{text-shadow:none}92%{text-shadow:none}93%{text-shadow:2px 0 #ff6040,-2px 0 #00e5ff}94%{text-shadow:none}96%{text-shadow:-2px 0 #ff6040,2px 0 #00e5ff}97%{text-shadow:none}}
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-@keyframes dotPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.8);opacity:.5}}
 
+/* ── Role screen container ─────────────────────────────────────── */
 #roleScreen{
   position:fixed;inset:0;z-index:1000;
   background:var(--bg);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:flex-start;
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  padding:48px 16px 40px;
   animation:roleScreenIn .4s ease;
-  overflow:hidden;
+  box-sizing:border-box;
 }
-#roleScreen.hidden{display:none}
+#roleScreen::-webkit-scrollbar{width:3px}
+#roleScreen::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+#roleScreen.hidden{display:none!important}
 
-/* Animated grid background */
-.role-bg-grid{
-  position:absolute;inset:0;pointer-events:none;
-  background-image:linear-gradient(rgba(0,229,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.04) 1px,transparent 1px);
-  background-size:40px 40px;
-}
-.role-bg-glow{
-  position:absolute;width:600px;height:600px;border-radius:50%;
-  background:radial-gradient(circle,rgba(0,229,255,.06) 0%,transparent 70%);
-  top:50%;left:50%;transform:translate(-50%,-60%);
-  pointer-events:none;
-}
-.role-bg-glow2{
-  position:absolute;width:400px;height:400px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,96,64,.04) 0%,transparent 70%);
-  bottom:-100px;left:-100px;pointer-events:none;
+/* inside phone preview shell — contained, scrollable */
+body.mobile-preview-mode #roleScreen{
+  position:absolute!important;
+  border-radius:28px;
+  padding:18px 10px 16px!important;
 }
 
-.role-header{text-align:center;margin-bottom:56px;position:relative;z-index:1}
-.role-system-tag{
-  font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;
-  text-transform:uppercase;color:var(--muted);margin-bottom:14px;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-}
+/* bg decorations */
+.role-bg-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(0,229,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.04) 1px,transparent 1px);background-size:40px 40px}
+.role-bg-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,.06) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-60%);pointer-events:none}
+.role-bg-glow2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(255,96,64,.04) 0%,transparent 70%);bottom:-100px;left:-100px;pointer-events:none}
+
+/* ── Header ───────────────────────────────────────────────────── */
+.role-header{text-align:center;margin-bottom:32px;position:relative;z-index:1;width:100%;flex-shrink:0}
+.role-system-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:8px}
 .role-system-dot{width:5px;height:5px;border-radius:50%;background:var(--accent3);animation:pulse 1.5s infinite}
-.role-title{
-  font-family:'Syne',sans-serif;font-weight:800;font-size:38px;
-  letter-spacing:-1.5px;color:var(--text);
-  animation:glitch 6s infinite;line-height:1.1;
-}
+.role-title{font-family:'Syne',sans-serif;font-weight:800;font-size:36px;letter-spacing:-1.5px;color:var(--text);animation:glitch 6s infinite;line-height:1.1}
 .role-title span{color:var(--accent)}
-.role-sub{
-  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);
-  margin-top:10px;letter-spacing:.5px;
-}
+.role-sub{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px;letter-spacing:.5px}
 
-.role-cards-row{
-  display:flex;gap:20px;align-items:stretch;position:relative;z-index:1;
-  flex-wrap:wrap;justify-content:center;padding:0 20px;
-}
+/* ── Cards row ────────────────────────────────────────────────── */
+.role-cards-row{display:flex;gap:14px;align-items:stretch;position:relative;z-index:1;justify-content:center;width:100%;max-width:800px;flex-shrink:0}
 
+/* ── Single card ──────────────────────────────────────────────── */
 .id-card{
-  width:230px;background:var(--surface);
-  border:1px solid var(--border);border-radius:16px;
+  flex:1 1 200px;max-width:240px;min-width:0;
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
   padding:0;cursor:pointer;position:relative;overflow:hidden;
-  transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;
-  animation:cardIn .5s ease both;
+  transition:transform .25s,box-shadow .25s,border-color .25s;
+  animation:cardIn .45s ease both;
   display:flex;flex-direction:column;
 }
-.id-card:nth-child(1){animation-delay:.1s}
-.id-card:nth-child(2){animation-delay:.22s}
-.id-card:nth-child(3){animation-delay:.34s}
-.id-card:hover{
-  transform:translateY(-8px) scale(1.02);
-  box-shadow:0 24px 60px rgba(0,0,0,.5);
-}
-.id-card.staff:hover{border-color:var(--accent3);box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 30px rgba(127,255,107,.12)}
-.id-card.supervisor:hover{border-color:var(--accent);box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 30px rgba(0,229,255,.12)}
-.id-card.manager:hover{border-color:var(--accent2);box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 30px rgba(255,96,64,.12)}
-
-/* Scan line effect on hover */
-.id-card::after{
-  content:'';position:absolute;left:0;right:0;height:60px;
-  background:linear-gradient(transparent,rgba(255,255,255,.04),transparent);
-  top:0;pointer-events:none;opacity:0;transition:opacity .3s;
-  animation:scanLine 2s linear infinite;
-}
+.id-card:nth-child(1){animation-delay:.08s}.id-card:nth-child(2){animation-delay:.18s}.id-card:nth-child(3){animation-delay:.28s}
+.id-card:hover{transform:translateY(-6px) scale(1.015);box-shadow:0 20px 48px rgba(0,0,0,.5)}
+.id-card:active{transform:scale(.97)!important;transition:transform .08s}
+.id-card.staff:hover    {border-color:var(--accent3);box-shadow:0 20px 48px rgba(0,0,0,.5),0 0 24px rgba(127,255,107,.12)}
+.id-card.supervisor:hover{border-color:var(--accent); box-shadow:0 20px 48px rgba(0,0,0,.5),0 0 24px rgba(0,229,255,.12)}
+.id-card.manager:hover  {border-color:var(--accent2);box-shadow:0 20px 48px rgba(0,0,0,.5),0 0 24px rgba(255,96,64,.12)}
+.id-card::after{content:'';position:absolute;left:0;right:0;height:60px;background:linear-gradient(transparent,rgba(255,255,255,.04),transparent);top:0;pointer-events:none;opacity:0;transition:opacity .3s;animation:scanLine 2s linear infinite}
 .id-card:hover::after{opacity:1}
 
-/* Card color stripe at top */
-.id-card-stripe{height:4px;width:100%;border-radius:16px 16px 0 0}
-.staff .id-card-stripe{background:linear-gradient(90deg,var(--accent3),rgba(127,255,107,.3))}
-.supervisor .id-card-stripe{background:linear-gradient(90deg,var(--accent),rgba(0,229,255,.3))}
-.manager .id-card-stripe{background:linear-gradient(90deg,var(--accent2),rgba(255,96,64,.3))}
+/* stripe */
+.id-card-stripe{height:4px;width:100%;border-radius:14px 14px 0 0}
+.staff      .id-card-stripe{background:linear-gradient(90deg,var(--accent3),rgba(127,255,107,.3))}
+.supervisor .id-card-stripe{background:linear-gradient(90deg,var(--accent), rgba(0,229,255,.3))}
+.manager    .id-card-stripe{background:linear-gradient(90deg,var(--accent2),rgba(255,96,64,.3))}
 
-.id-card-body{padding:20px;flex:1;display:flex;flex-direction:column}
-
-/* Card header */
-.id-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+/* body */
+.id-card-body{padding:14px;flex:1;display:flex;flex-direction:column}
+.id-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
 .id-card-logo{font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;opacity:.6}
-.id-card-chip{width:26px;height:20px;border-radius:3px;border:1px solid;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;padding:3px;opacity:.7}
-.staff .id-card-chip{border-color:rgba(127,255,107,.4)}
-.staff .id-card-chip div{background:rgba(127,255,107,.3);border-radius:1px}
-.supervisor .id-card-chip{border-color:rgba(0,229,255,.4)}
-.supervisor .id-card-chip div{background:rgba(0,229,255,.3);border-radius:1px}
-.manager .id-card-chip{border-color:rgba(255,96,64,.4)}
-.manager .id-card-chip div{background:rgba(255,96,64,.3);border-radius:1px}
+.id-card-chip{width:24px;height:18px;border-radius:3px;border:1px solid;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;padding:3px;opacity:.7}
+.staff      .id-card-chip{border-color:rgba(127,255,107,.4)}.staff      .id-card-chip div{background:rgba(127,255,107,.3);border-radius:1px}
+.supervisor .id-card-chip{border-color:rgba(0,229,255,.4)}  .supervisor .id-card-chip div{background:rgba(0,229,255,.3);border-radius:1px}
+.manager    .id-card-chip{border-color:rgba(255,96,64,.4)}  .manager    .id-card-chip div{background:rgba(255,96,64,.3);border-radius:1px}
 
-/* Avatar */
-.id-card-avatar{
-  width:64px;height:64px;border-radius:12px;margin-bottom:14px;
-  display:flex;align-items:center;justify-content:center;font-size:28px;
-  border:2px solid;position:relative;overflow:hidden;
-}
-.staff .id-card-avatar{background:rgba(127,255,107,.08);border-color:rgba(127,255,107,.25)}
-.supervisor .id-card-avatar{background:rgba(0,229,255,.08);border-color:rgba(0,229,255,.25)}
-.manager .id-card-avatar{background:rgba(255,96,64,.08);border-color:rgba(255,96,64,.25)}
+/* avatar */
+.id-card-avatar{width:50px;height:50px;border-radius:10px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid}
+.staff      .id-card-avatar{background:rgba(127,255,107,.08);border-color:rgba(127,255,107,.25)}
+.supervisor .id-card-avatar{background:rgba(0,229,255,.08); border-color:rgba(0,229,255,.25)}
+.manager    .id-card-avatar{background:rgba(255,96,64,.08); border-color:rgba(255,96,64,.25)}
 
-.id-card-role-name{
-  font-family:'Syne',sans-serif;font-weight:800;font-size:18px;
-  letter-spacing:-.5px;margin-bottom:2px;
-}
-.staff .id-card-role-name{color:var(--accent3)}
+/* name / sub */
+.id-card-role-name{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;letter-spacing:-.3px;margin-bottom:2px}
+.staff      .id-card-role-name{color:var(--accent3)}
 .supervisor .id-card-role-name{color:var(--accent)}
-.manager .id-card-role-name{color:var(--accent2)}
+.manager    .id-card-role-name{color:var(--accent2)}
+.id-card-role-sub{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px}
 
-.id-card-role-sub{
-  font-family:'IBM Plex Mono',monospace;font-size:9px;
-  color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;
-}
-
-/* Permission pills */
-.id-card-perms{display:flex;flex-direction:column;gap:5px;margin-bottom:16px;flex:1}
-.perm-pill{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:5px 8px;border-radius:5px;background:var(--surface2);
-  font-size:10px;
-}
-.perm-pill-name{font-family:'DM Sans',sans-serif;color:var(--muted)}
-.perm-pill-val{
-  font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:600;
-  padding:2px 5px;border-radius:3px;
-}
-.pv-full{background:rgba(0,229,255,.12);color:var(--accent)}
-.pv-view{background:rgba(127,255,107,.12);color:var(--accent3)}
-.pv-none{background:rgba(255,71,87,.1);color:var(--danger)}
+/* perm pills */
+.id-card-perms{display:flex;flex-direction:column;gap:4px;margin-bottom:12px;flex:1}
+.perm-pill{display:flex;align-items:center;justify-content:space-between;padding:4px 7px;border-radius:5px;background:var(--surface2)}
+.perm-pill-name{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted)}
+.perm-pill-val{font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:600;padding:2px 5px;border-radius:3px}
+.pv-full   {background:rgba(0,229,255,.12);color:var(--accent)}
+.pv-view   {background:rgba(127,255,107,.12);color:var(--accent3)}
+.pv-none   {background:rgba(255,71,87,.1);color:var(--danger)}
 .pv-limited{background:rgba(255,211,42,.1);color:var(--warn)}
 
-/* Select button */
-.id-card-btn{
-  width:100%;padding:10px;border-radius:8px;border:1px solid;
-  font-family:'Syne',sans-serif;font-weight:700;font-size:12px;
-  letter-spacing:.5px;text-transform:uppercase;cursor:pointer;
-  transition:all .2s;background:transparent;margin-top:auto;
-}
-.staff .id-card-btn{border-color:rgba(127,255,107,.4);color:var(--accent3)}
-.staff .id-card-btn:hover{background:var(--accent3);color:#000;border-color:var(--accent3)}
+/* enter button */
+.id-card-btn{width:100%;padding:9px;border-radius:8px;border:1px solid;font-family:'Syne',sans-serif;font-weight:700;font-size:11px;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;transition:all .18s;background:transparent;margin-top:auto}
+.staff      .id-card-btn{border-color:rgba(127,255,107,.4);color:var(--accent3)}
+.staff      .id-card-btn:hover,.staff      .id-card-btn:active{background:var(--accent3);color:#000;border-color:var(--accent3)}
 .supervisor .id-card-btn{border-color:rgba(0,229,255,.4);color:var(--accent)}
-.supervisor .id-card-btn:hover{background:var(--accent);color:#000;border-color:var(--accent)}
-.manager .id-card-btn{border-color:rgba(255,96,64,.4);color:var(--accent2)}
-.manager .id-card-btn:hover{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+.supervisor .id-card-btn:hover,.supervisor .id-card-btn:active{background:var(--accent);color:#000;border-color:var(--accent)}
+.manager    .id-card-btn{border-color:rgba(255,96,64,.4);color:var(--accent2)}
+.manager    .id-card-btn:hover,.manager    .id-card-btn:active{background:var(--accent2);color:#fff;border-color:var(--accent2)}
 
-/* Barcode strip at bottom */
-.id-card-barcode{
-  padding:10px 20px 14px;display:flex;flex-direction:column;align-items:center;gap:4px;
-  border-top:1px solid var(--border);
-}
-.barcode-lines{display:flex;gap:1px;align-items:flex-end;height:16px}
+/* barcode */
+.id-card-barcode{padding:7px 14px 11px;display:flex;flex-direction:column;align-items:center;gap:4px;border-top:1px solid var(--border)}
+.barcode-lines{display:flex;gap:1px;align-items:flex-end;height:13px}
 .barcode-lines span{background:var(--muted);opacity:.35;border-radius:1px;width:2px}
 .barcode-num{font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--muted);opacity:.5;letter-spacing:3px}
 
-/* Footer */
-.role-footer{
-  margin-top:40px;font-family:'IBM Plex Mono',monospace;font-size:10px;
-  color:var(--muted);text-align:center;position:relative;z-index:1;
-  display:flex;align-items:center;gap:6px;
-}
+/* footer */
+.role-footer{margin-top:28px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);text-align:center;position:relative;z-index:1;display:flex;align-items:center;gap:6px;flex-shrink:0}
 .role-footer-dot{width:4px;height:4px;border-radius:50%;background:var(--muted);opacity:.5}
 
-@media(max-width:768px){
-  .role-title{font-size:26px}
-  .role-cards-row{gap:14px}
-  .id-card{width:calc(50% - 7px);min-width:150px}
-  .role-header{margin-bottom:32px}
+/* ── Tablet: wrap to 2+1 ──────────────────────────────────────── */
+@media(max-width:720px) and (min-width:481px){
+  .role-title{font-size:28px}
+  .role-header{margin-bottom:22px}
+  .role-cards-row{flex-wrap:wrap;gap:12px}
+  .id-card{flex:1 1 calc(50% - 6px);max-width:calc(50% - 6px)}
+  .id-card:last-child{flex:1 1 100%;max-width:300px}
+}
+
+/* ── Phone: single column, compact, 2-col pills ───────────────── */
+@media(max-width:480px){
+  #roleScreen{padding:28px 12px 32px}
+  .role-title{font-size:22px;letter-spacing:-.8px}
+  .role-sub{font-size:10px}
+  .role-header{margin-bottom:20px}
+  .role-system-tag{font-size:8px;letter-spacing:2px;margin-bottom:10px}
+  .role-cards-row{flex-direction:column;align-items:center;gap:10px}
+  .id-card{flex:none;width:100%;max-width:340px}
+  .id-card:hover{transform:none}        /* no hover lift on touch */
+  .id-card-body{padding:12px}
+  .id-card-top{margin-bottom:8px}
+  .id-card-avatar{width:44px;height:44px;font-size:22px;margin-bottom:8px}
   .id-card-role-name{font-size:15px}
+  .id-card-role-sub{margin-bottom:8px}
+  .id-card-perms{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:10px}
+  .id-card-barcode{padding:6px 12px 10px}
+  .role-footer{display:none}
 }
-@media(max-width:500px){
-  .id-card{width:100%;max-width:280px}
-  .role-title{font-size:22px}
-}
+
+/* ── Phone preview shell ──────────────────────────────────────── */
+body.mobile-preview-mode .role-title{font-size:16px!important;letter-spacing:-.3px!important}
+body.mobile-preview-mode .role-sub{font-size:8px!important;margin-top:4px!important}
+body.mobile-preview-mode .role-header{margin-bottom:12px!important}
+body.mobile-preview-mode .role-system-tag{font-size:7px!important;letter-spacing:1px!important;margin-bottom:6px!important}
+body.mobile-preview-mode .role-cards-row{flex-direction:column!important;align-items:center!important;gap:7px!important}
+body.mobile-preview-mode .id-card{flex:none!important;width:100%!important;max-width:100%!important}
+body.mobile-preview-mode .id-card:hover{transform:none!important}
+body.mobile-preview-mode .id-card-body{padding:9px!important}
+body.mobile-preview-mode .id-card-top{margin-bottom:6px!important}
+body.mobile-preview-mode .id-card-avatar{width:32px!important;height:32px!important;font-size:17px!important;margin-bottom:6px!important}
+body.mobile-preview-mode .id-card-role-name{font-size:12px!important}
+body.mobile-preview-mode .id-card-role-sub{font-size:7px!important;margin-bottom:6px!important}
+body.mobile-preview-mode .id-card-perms{display:grid!important;grid-template-columns:1fr 1fr!important;gap:3px!important;margin-bottom:7px!important}
+body.mobile-preview-mode .perm-pill{padding:3px 5px!important}
+body.mobile-preview-mode .perm-pill-name{font-size:8px!important}
+body.mobile-preview-mode .perm-pill-val{font-size:7px!important}
+body.mobile-preview-mode .id-card-btn{padding:6px!important;font-size:9px!important}
+body.mobile-preview-mode .id-card-barcode{padding:4px 10px 7px!important}
+body.mobile-preview-mode .barcode-lines{height:9px!important}
+body.mobile-preview-mode .barcode-num{font-size:6px!important;letter-spacing:2px!important}
+body.mobile-preview-mode .role-footer{display:none!important}
+
 </style>
 </head>
 <body>
